@@ -6,6 +6,13 @@
   font-family: Raleway;
 }
 
+.text-overflow {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  width: 500px;
+}
+
 /* Your Playlists section */
 .your-playlists {
   font-weight: bold;

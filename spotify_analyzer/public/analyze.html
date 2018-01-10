@@ -5,12 +5,23 @@
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Raleway" />
     <link rel="stylesheet" href="style.css">
+  </head>
     <body>
-      hi
+      <div class="container">
+        <div id="playlist-stats">
+        </div>
+      </div>
+
+    <script id="playlist-template" type="text/x-handlebars-template">
+      <div id="analyze-title">
+        <h1>Analyzing Playlist {{playlistname}}</h1>
+      </div>
+      <button onclick="window.history.back()">Back</button>
+    </script>
 
     <script src="//cdnjs.cloudflare.com/ajax/libs/handlebars.js/2.0.0-alpha.1/handlebars.min.js"></script>
     <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
     <script type="text/javascript" src="index.js"></script>
+    <script type="text/javascript" src="analyze.js"></script>
     </body>
-  </head>
 </html>

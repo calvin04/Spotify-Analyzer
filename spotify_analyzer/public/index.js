@@ -1,4 +1,4 @@
-(function() {
+
 /**
  * Obtains parameters from the hash of the URL
  * @return Object
@@ -14,7 +14,7 @@ function getHashParams() {
 }
 
 /**
- * Gets all playlists
+ * Gets all playlists of the logged in user
  * @return Object
  */
 function getAllPlaylists() {
@@ -26,7 +26,7 @@ function getAllPlaylists() {
       success: function(data) {
         /* Loop through playlists and add them */
 	for (var key in data.items) {
-	  all += data.items[key].name + '<button class="playlist-analyze" onclick="window.location.href=&quot;analyze.html?id=' + data.items[key].id + '&quot;">Analyze Playlist</button><br>';
+	  all += data.items[key].name + '<button class="playlist-analyze" onclick="window.location.href=&quot;analyze.html?id=' + data.items[key].id + '&token=' + access_token + '&quot;">Analyze Playlist</button><br>';
 	}
 	playlistListPlaceholder.innerHTML = playlistListTemplate({ all: all });
       }
@@ -55,10 +55,6 @@ if (error) {
   alert('There was an error during the authentication');
 } else {
   if (access_token) {
-    /*oauthPlaceholder.innerHTML = oauthTemplate({
-      access_token: access_token,
-      refresh_token: refresh_token
-    });*/
     $.ajax({
         url: 'https://api.spotify.com/v1/me',
         headers: {
@@ -92,21 +88,7 @@ if (error) {
     });
   }, false);
 
-  /* DISPLAY INFO OF PLAYLISTS */
-  document.getElementById('analyze').addEventListener('click', function(){
-    alert("hi");
-  });
-
-  var pray = document.getElementsByClassName('playlist-analyze');
-  alert(pray);
-  //.addEventListener('click', function(){
-  //  alert("hfffdi");
-  //});
-
-/* DISPLAY INFO OF PLAYLISTS */
-  document.getElementsByClassName('playlist-analyze').addEventListener('click', function(id){
-    alert(id);
-  });
-
 }
-})();
+
+
+
