@@ -8,15 +8,19 @@
   </head>
     <body>
       <div class="container">
+        <div id="playlist-name">
+        </div>
         <div id="playlist-stats">
         </div>
+        <button onclick="window.history.back()">Back</button>
       </div>
 
-    <script id="playlist-template" type="text/x-handlebars-template">
-      <div id="analyze-title">
-        <h1>Analyzing Playlist {{playlistname}}</h1>
-      </div>
-      <button onclick="window.history.back()">Back</button>
+    <script id="analyze-title" type="text/x-handlebars-template">
+      <h1>Analyzing Playlist {{playlistname}}</h1>
+    </script>
+
+    <script id="analyze-stats" type="text/x-handlebars-template">
+      <p>{{{tracks}}}</p>
     </script>
 
     <script src="//cdnjs.cloudflare.com/ajax/libs/handlebars.js/2.0.0-alpha.1/handlebars.min.js"></script>

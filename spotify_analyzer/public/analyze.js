@@ -60,19 +60,52 @@ function getPlaylistName(userid, playlistid) {
  * Gets ALL playlist stats! given the IDs of user and playlist
  * @return Object
  */
-function getPlaylistStats(userid, playlistid) {
-    $.ajax({
-      type: 'GET',
-      url:'https://api.spotify.com/v1/users/' + userid + '/playlists/' +  playlistid + '/tracks',
-      headers: {'Authorization': "Bearer " + access_token},
-      success: function(data) {
-	alert(testing());
-       }
-    });
-}
+function getPlaylistStats(userid, playlistid, offset) {
+      var items, next, total;
+      var alltracks = "";
+      var real;
+      var results;
 
-function testing() {
-	return "test"
+      $.ajax({
+        type: 'GET',
+        url:'https://api.spotify.com/v1/users/' + userid + '/playlists/' +  playlistid + '/tracks?offset=' + offset,
+        headers: {'Authorization': "Bearer " + access_token},
+        success: function(data) {
+          /* Get the first 100 items */
+          items = data.items;
+	  total = data.total;
+
+	  for (var track in data.items) {
+	  }
+	  real = JSON.parse(JSON.stringify(data.items));
+
+	  /* Loop for >100 items */
+	  while (data.total - offset - 100 > 0) {
+		offset += 100;
+                $.ajax({
+		  type: 'GET',
+		  url:'https://api.spotify.com/v1/users/' + userid + '/playlists/' +  playlistid + '/tracks?offset=' + offset,
+		  headers: {'Authorization': "Bearer " + access_token},
+		  success: function(data1) {
+		    for (var track in data1.items) {
+	              real.push(JSON.parse(JSON.stringify(data1.items[track])));
+		    }
+		  }
+	        });
+          }
+	
+ 	  /* Wait for everything to show up! */
+	  setTimeout(function(){
+	    for (var track in real) {
+	      alltracks += real[track].track.name + '<br>';
+            }
+            playlistStatsPlaceholder.innerHTML = playlistStatsTemplate({ tracks: alltracks });
+	  }, 300);
+          
+          //document.getElementById("playlist-stats").append(alltracks);
+        }
+      });
+
 }
 
 /**
@@ -80,15 +113,22 @@ function testing() {
  */
 var access_token = getParameterByName('token');
 var playlist_id = getParameterByName('id');
-var playlistList = document.getElementById('playlist-template').innerHTML,
+var playlistList = document.getElementById('analyze-title').innerHTML,
     playlistListTemplate = Handlebars.compile(playlistList),
-    playlistListPlaceholder = document.getElementById('playlist-stats');
+    playlistListPlaceholder = document.getElementById('playlist-name');
 
 /* Shows title of playlist */
 getId(function(data) {
 	getPlaylistName(data.id, playlist_id);
     });
+
+var all_tracks;
+
 /* Getting playlist stats */
 getId(function(data) {
-	getPlaylistStats(data.id, playlist_id);
+	getPlaylistStats(data.id, playlist_id, 0);
     });
+
+var playlistStats = document.getElementById('analyze-stats').innerHTML,
+    playlistStatsTemplate = Handlebars.compile(playlistStats),
+    playlistStatsPlaceholder = document.getElementById('playlist-stats');
