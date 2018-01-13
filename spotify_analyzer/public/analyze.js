@@ -26,6 +26,38 @@ function getParameterByName(name, url) {
     return decodeURIComponent(results[2].replace(/\+/g, " "));
 }
 
+function pad(n, z) {
+    // Pad to 2 or 3 digits, default is 2
+    z = z || 2;
+    return ('00' + n).slice(-z);
+}
+
+/**
+ * Converts milliseconds to time (credit: stackoverflow)
+ * @return Object
+ */
+function msToTime(s) {
+  var ms = s % 1000;
+  s = (s - ms) / 1000;
+  var secs = s % 60;
+  s = (s - secs) / 60;
+  var mins = s % 60;
+  var hrs = (s - mins) / 60;
+  return pad(hrs) + ':' + pad(mins) + ':' + pad(secs);
+}
+
+/**
+ * Converts milliseconds to m:ss (credit: stackoverflow)
+ * @return Object
+ */
+function msToTimeAvg(s) {
+  s = (s - (s % 1000)) / 1000;
+  var secs = s % 60;
+  s = (s - secs) / 60;
+  var mins = s % 60;
+  return mins + ':' + pad(secs);
+}
+
 /**
  * Gets ID of current user
  * @return Object
@@ -61,10 +93,12 @@ function getPlaylistName(userid, playlistid) {
  * @return Object
  */
 function getPlaylistStats(userid, playlistid, offset) {
-      var items, next, total;
+      var totaltracks = 0;
+      var popularity = 0;
+      var duration = 0;
       var alltracks = "";
-      var real;
-      var results;
+      var playlist_data, total_duration;
+      var artists = {};
 
       $.ajax({
         type: 'GET',
@@ -72,15 +106,11 @@ function getPlaylistStats(userid, playlistid, offset) {
         headers: {'Authorization': "Bearer " + access_token},
         success: function(data) {
           /* Get the first 100 items */
-          items = data.items;
-	  total = data.total;
-
-	  for (var track in data.items) {
-	  }
-	  real = JSON.parse(JSON.stringify(data.items));
+	  totaltracks = data.total;
+	  playlist_data = JSON.parse(JSON.stringify(data.items));
 
 	  /* Loop for >100 items */
-	  while (data.total - offset - 100 > 0) {
+	  while (totaltracks - offset - 100 > 0) {
 		offset += 100;
                 $.ajax({
 		  type: 'GET',
@@ -88,19 +118,33 @@ function getPlaylistStats(userid, playlistid, offset) {
 		  headers: {'Authorization': "Bearer " + access_token},
 		  success: function(data1) {
 		    for (var track in data1.items) {
-	              real.push(JSON.parse(JSON.stringify(data1.items[track])));
+	              playlist_data.push(JSON.parse(JSON.stringify(data1.items[track])));
 		    }
 		  }
 	        });
           }
 	
- 	  /* Wait for everything to show up! */
+ 	  /* Wait for everything to show up */
 	  setTimeout(function(){
-	    for (var track in real) {
-	      alltracks += real[track].track.name + '<br>';
+	    for (var track in playlist_data) {
+ 	      // append name of track
+	      alltracks += playlist_data[track].track.name + " " + playlist_data[track].track.popularity + '<br>';
+	      popularity += playlist_data[track].track.popularity;
+	      duration += playlist_data[track].track.duration_ms;
             }
-            playlistStatsPlaceholder.innerHTML = playlistStatsTemplate({ tracks: alltracks });
-	  }, 300);
+
+	    popularity = (popularity / totaltracks).toFixed(2);
+	    total_duration = msToTime(duration);
+	    duration = msToTimeAvg((duration / totaltracks).toFixed(0));
+
+	    /* Update the page with the stats */
+            playlistStatsPlaceholder.innerHTML = playlistStatsTemplate({
+              popularity_avg: popularity,
+	      total_duration: total_duration,
+	      avg_duration: duration,
+	      total: totaltracks,
+	      tracks: alltracks });
+	  }, 500);
           
           //document.getElementById("playlist-stats").append(alltracks);
         }
@@ -109,7 +153,7 @@ function getPlaylistStats(userid, playlistid, offset) {
 }
 
 /**
- * Main
+ * MAIN
  */
 var access_token = getParameterByName('token');
 var playlist_id = getParameterByName('id');
@@ -121,8 +165,6 @@ var playlistList = document.getElementById('analyze-title').innerHTML,
 getId(function(data) {
 	getPlaylistName(data.id, playlist_id);
     });
-
-var all_tracks;
 
 /* Getting playlist stats */
 getId(function(data) {
