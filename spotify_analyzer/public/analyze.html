@@ -4,13 +4,15 @@
     <title>Spotify Playlist Analyzer</title>
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Raleway" />
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="css/style.css">
   </head>
     <body>
       <div class="container">
         <div id="playlist-name">
         </div>
         <div id="playlist-stats">
+        </div>
+        <div id="frequent-artists">
         </div>
         <button onclick="window.history.back()">Back</button>
       </div>
@@ -24,7 +26,6 @@
       <b>Total playlist duration:</b> {{total_duration}} <br>
       <b>Average track duration:</b> {{avg_duration}} <br>
       <b>Average popularity of tracks:</b> {{popularity_avg}}</p>
-      <p>{{{tracks}}}</p>
     </script>
 
     <script src="//cdnjs.cloudflare.com/ajax/libs/handlebars.js/2.0.0-alpha.1/handlebars.min.js"></script>

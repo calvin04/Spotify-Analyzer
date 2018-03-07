@@ -33,3 +33,12 @@
 .playlist-analyze {
   float: right;
 }
+
+/* Frequent Artists section */
+#frequent-artists {
+  padding-bottom: 20px;
+}
+
+#artist-count {
+  width: 250px;
+}
