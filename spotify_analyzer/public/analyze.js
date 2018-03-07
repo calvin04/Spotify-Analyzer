@@ -105,7 +105,7 @@ function displayFrequentArtists(artist_list) {
     sorted_artists.sort(function(a, b) {
         return b[1] - a[1];
     });
-    console.log(sorted_artists);
+
     // generate table
     var e = document.createElement('div');
     e.className = "freq_artist_table";
@@ -131,7 +131,7 @@ function getPlaylistStatsAPI(userid, playlistid, offset, playlist_data) {
             // get the next 100 items
 	    for (var track in data.items) {
 	        playlist_data.push(JSON.parse(JSON.stringify(data.items[track])));
-	    }
+	    } 
             offset += 100;
 
             // loop another GET request for next 100 tracks
