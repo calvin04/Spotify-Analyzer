@@ -34,6 +34,11 @@
   float: right;
 }
 
+/* Centering Analytics*/
+#playlist-name, #playlist-stats, #frequent-artists, #frequent-albums, #bar-div {
+  text-align: center;
+}
+
 /* Analyze playlist header */
 #playlist-name {
   border-bottom: 1px solid black;
@@ -46,6 +51,7 @@
 
 #artist-count {
   width: 250px;
+  margin: 0px auto;
 }
 
 .container {
@@ -54,4 +60,16 @@
 
 #album-count {
   width: 600px;
+  margin: 0px auto;
+}
+
+/* Bar Chart Canvas */
+#bar-div {
+  width: 100%;
+}
+#bar-chart {
+  /*width: 100% !important;*/
+  height: 500px !important;
+  max-width: 1000px;
+  display: inline;
 }

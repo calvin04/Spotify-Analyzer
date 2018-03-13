@@ -111,7 +111,7 @@ function displayFrequentArtists(artist_list) {
     e.className = "freq_artist_table";
 
     for (i = 0; i < Math.min(num, sorted_artists.length); i++) {
-        table_info += "<tr><td>" + sorted_artists[i][0] + "</td><td align='right' width='10%'>" + sorted_artists[i][1] + "</td></tr>";
+        table_info += "<tr><td align='left'>" + sorted_artists[i][0] + "</td><td align='right' width='10%'>" + sorted_artists[i][1] + "</td></tr>";
     }
 
     table_info += "</table>";
@@ -140,7 +140,7 @@ function displayFrequentAlbums(album_list, album_artists) {
     e.className = "freq_album_table";
 
     for (i = 0; i < Math.min(num, sorted_albums.length); i++) {
-        table_info += "<tr><td>" + sorted_albums[i][0] + "</td><td>" + album_artists[sorted_albums[i][0]] + "</td><td align='right' width='4%'>" + sorted_albums[i][1] + "</td></tr>";
+        table_info += "<tr><td align='left'>" + sorted_albums[i][0] + "</td><td align='left'>" + album_artists[sorted_albums[i][0]] + "</td><td align='right' width='4%'>" + sorted_albums[i][1] + "</td></tr>";
     }
 
     table_info += "</table>";
@@ -160,7 +160,7 @@ function getAverageYear(album_list, album_year) {
         total_years += album_year[album] * album_list[album];
         song_count += album_list[album];
     }
-    return (total_years / song_count).toFixed(0);
+    return Math.round(total_years / song_count);
 }
 
 /**
@@ -231,11 +231,51 @@ function getPlaylistStatsAPI(userid, playlistid, offset, playlist_data) {
                 popularity = (popularity / totaltracks).toFixed(2);
 	        var total_duration = msToTime(duration);
 	        duration = msToTimeAvg((duration / totaltracks).toFixed(0));
-                console.log(year_list);
+
                 // Display artist and album table
 		displayFrequentArtists(artist_list);
                 displayFrequentAlbums(album_list, album_artists);
 		var avg_year = getAverageYear(album_list, album_year);	
+
+		var years = [];
+		var year_count = [];
+		for (var i = parseInt(Object.keys(year_list)[0]); i < 2019; i++) {
+                    years.push(String(i));
+		    if (year_list[String(i)]) {
+		        year_count.push(year_list[String(i)]);
+                    } else {
+			year_count.push(0);
+                    }
+                }	
+
+		new Chart(document.getElementById("bar-chart"), {
+		    type: 'bar',
+		    data: {
+		      labels: years,
+		      datasets: [
+			{
+			  label: "Song count",
+			  backgroundColor: "#3e95cd",
+			  data: year_count
+			}
+		      ]
+		    },
+		    options: {
+		      legend: { display: false },
+		      title: {
+			display: true,
+			text: 'Song Count By Year'
+		      },
+		      scales : {
+			yAxes: [{
+			  ticks: { callback : function(value) { 
+			    if (!(value % 1)) {
+                            return Number(value).toFixed(0);
+                          }}}
+			}]
+		      }
+		    }
+                });
 
 	        /* Update the page with the stats */
                 playlistStatsPlaceholder.innerHTML = playlistStatsTemplate({
