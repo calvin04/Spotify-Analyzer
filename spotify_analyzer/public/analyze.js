@@ -177,7 +177,7 @@ function getPlaylistStatsAPI(userid, playlistid, offset, playlist_data) {
 	        playlist_data.push(JSON.parse(JSON.stringify(data.items[track])));
 	    } 
             offset += 100;
-
+ 
             // loop another GET request for next 100 tracks
             if (data.total - offset > 0) {
                 getPlaylistStatsAPI(userid, playlistid, offset, playlist_data);
@@ -248,6 +248,8 @@ function getPlaylistStatsAPI(userid, playlistid, offset, playlist_data) {
                     }
                 }	
 
+		Chart.defaults.global.defaultFontFamily = 'Raleway';
+		Chart.defaults.global.defaultFontColor = 'black';
 		new Chart(document.getElementById("bar-chart"), {
 		    type: 'bar',
 		    data: {
@@ -264,7 +266,8 @@ function getPlaylistStatsAPI(userid, playlistid, offset, playlist_data) {
 		      legend: { display: false },
 		      title: {
 			display: true,
-			text: 'Song Count By Year'
+			text: 'Song Count By Year',
+			fontSize: 24
 		      },
 		      scales : {
 			yAxes: [{
@@ -295,30 +298,25 @@ function getPlaylistStatsAPI(userid, playlistid, offset, playlist_data) {
  * @return Object
  */
 function getPlaylistStats(userid, playlistid, offset) {
-      var playlist_data = [];
-      getPlaylistStatsAPI(userid, playlistid, offset, playlist_data);
+    var playlist_data = [];
+    getPlaylistStatsAPI(userid, playlistid, offset, playlist_data);
 }
 
-/**
+/************
  * MAIN
- */
+ ************/
 var access_token = getParameterByName('token');
 var playlist_id = getParameterByName('id');
+var username_id = getParameterByName('username');
 var playlistList = document.getElementById('analyze-title').innerHTML,
     playlistListTemplate = Handlebars.compile(playlistList),
     playlistListPlaceholder = document.getElementById('playlist-name');
 
 // Shows title of playlist
-getId(function(data) {
-	getPlaylistName(data.id, playlist_id);
-    });
+getPlaylistName(username_id, playlist_id);
 
 // Getting playlist stats
-getId(function(data) {
-        //getPlaylistStats("caaakeeey", "6QAKnenuZoowNqxRzZbeRg", 0);
-        //getPlaylistStats("aililuong", "3ls2q5TZDZVzJDgFL55mPi", 0);
-	getPlaylistStats(data.id, playlist_id, 0);
-    });
+getPlaylistStats(username_id, playlist_id, 0);
 
 var playlistStats = document.getElementById('analyze-stats').innerHTML,
     playlistStatsTemplate = Handlebars.compile(playlistStats),
