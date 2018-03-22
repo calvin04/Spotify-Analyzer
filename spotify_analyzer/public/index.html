@@ -14,21 +14,23 @@
 
   <body>
     <div class="container">
+      <h1>Spotify Playlist Analyzer</h1>
       <div id="login">
-        <h1>Spotify Playlist Analyzer by calvin04</h1>
         <a href="/login" class="btn btn-primary">Log in</a>
       </div>
       <div id="loggedin">
         <div id="user-profile">
         </div>
+        <div id="your-playlists-title">
+	    <h2>Your Playlists</h2>
+	</div>
         <div id="all-play">
- 	<h2>LOL</h2>
         </div>
         <div id="search-user">
 	    <form id="search-user-form">
 		<div class="form_title">Search for a user's playlists</div>
 		    <input type="text" id="playlist_text" class="form_element" placeholder="Enter username" name="user_name" required/>
-		    <button type="submit" class="btn">Submit</button>
+		    <button type="submit">Submit</button>
 	    </form>
         </div>
         <div id="oauth">
@@ -57,10 +59,7 @@
     </script>
 
     <script id="all-playlists" type="text/x-handlebars-template">
-      <h2>Your Playlists</h2>
-      <div class="your-playlists">
-        <div class="your-playlists-all">{{{all}}}</div>
-      </div>
+      <div class="your-playlists-all">{{{all}}}</div>
     </script>
 
     <script id="oauth-template" type="text/x-handlebars-template">

@@ -1,3 +1,5 @@
+window.onload = (function() {
+
 /**
  * Obtains parameters from the hash of the URL
  * @return Object
@@ -58,7 +60,7 @@ function getAllPlaylists(username, isOwner = false) {
       success: function(data) {
         /* Loop through playlists and add them */
 	for (var key in data.items) {
-	  all += data.items[key].name + '<button class="playlist-analyze" onclick="window.location.href=&quot;analyze.html?username=' + username + '&id=' + data.items[key].id + '&token=' + access_token + '&quot;">Analyze Playlist</button><br>';
+	  all += '<div class="playlist-button-name">' + data.items[key].name + '</div><div class="playlist-button-click"><button class="playlist-analyze" onclick="window.location.href=&quot;analyze.html?username=' + data.items[key].owner.id + '&id=' + data.items[key].id + '&token=' + access_token + '&quot;">Analyze Playlist</button></div>';
 	}
 	playlistListPlaceholder.innerHTML = playlistListTemplate({ all: all });
       }
@@ -66,9 +68,9 @@ function getAllPlaylists(username, isOwner = false) {
     return all;
   }
 
-/**
+/**********
  * MAIN
-**/
+ **********/
 var userProfileSource = document.getElementById('user-profile-template').innerHTML,
     userProfileTemplate = Handlebars.compile(userProfileSource),
     userProfilePlaceholder = document.getElementById('user-profile');
@@ -87,35 +89,35 @@ var playlistList = document.getElementById('all-playlists').innerHTML,
     playlistListTemplate = Handlebars.compile(playlistList),
     playlistListPlaceholder = document.getElementById('all-play');
 
-// load logged in user's playlists if none given
-getId(function(data) {
-    if (username) {
-        getAllPlaylists(username);
-    } else {
-	getAllPlaylists(data.id, true);
-    }
-});
-
 if (error) {
-  alert('There was an error during the authentication');
+    alert('There was an error during the authentication');
 } else {
-  if (access_token) {
-    $.ajax({
-        url: 'https://api.spotify.com/v1/me',
-        headers: {
-          'Authorization': 'Bearer ' + access_token
-        },
-        success: function(response) {
-          userProfilePlaceholder.innerHTML = userProfileTemplate(response);
-          $('#login').hide();
-          $('#loggedin').show();
-        }
-    });
-  } else {
-      // render initial screen
-      $('#login').show();
-      $('#loggedin').hide();
-  }
+    if (access_token) {
+        $.ajax({
+            url: 'https://api.spotify.com/v1/me',
+            headers: {
+                'Authorization': 'Bearer ' + access_token
+            },
+            success: function(response) {
+                userProfilePlaceholder.innerHTML = userProfileTemplate(response);
+                $('#login').hide();
+                $('#loggedin').show();
+		// load logged in user's playlists if none given
+		getId(function(data) {
+		    if (username) {
+			document.getElementById("your-playlists-title").innerHTML = "<h2>" + username + "'s Playlists</h2>";
+			getAllPlaylists(username);
+		    } else {
+			getAllPlaylists(data.id, true);
+		    }
+		});
+            }
+        });
+    } else {
+        // render initial screen
+        $('#login').show();
+        $('#loggedin').hide();
+    }
 
 }
 
@@ -132,4 +134,5 @@ document.querySelector('#search-user-form').addEventListener('submit', function(
 	window.location = currentURL;
 });
 
+}());
 

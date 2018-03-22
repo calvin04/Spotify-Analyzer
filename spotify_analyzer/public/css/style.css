@@ -1,6 +1,6 @@
-/*
+/*******************
  * TABLE OF CONTENTS
-**/
+********************/
 
 * {
   font-family: Raleway;
@@ -14,22 +14,32 @@
 }
 
 /* Your Playlists section */
-.your-playlists {
-  font-weight: bold;
-}
 .your-playlists-all {
+  font-weight: bold;
   width: 100%;
   max-width: 550px;
-  line-height: 40px;
+  line-height: 32px;
+  display: grid;
+  grid-template-columns: [first] 3fr [second] 1fr [third];
+  margin-bottom: 10px;
 }
+
+.your-playlists-all div {
+  margin-bottom: 10px;
+}
+
 .your-playlists-all button {
   line-height: 24px;
-  display: table-cell;
   text-align: center;
   vertical-align: middle;
 }
 
 /* Analyze playlist buttons */
+.playlist-button-name {
+  display: inline;
+  text-align: left;
+}
+
 .playlist-analyze {
   float: right;
 }
