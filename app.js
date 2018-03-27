@@ -11,10 +11,12 @@ var express = require('express'); // Express web server framework
 var request = require('request'); // "Request" library
 var querystring = require('querystring');
 var cookieParser = require('cookie-parser');
+var path = require('path')
 
 var client_id = '3558fa27e3de4d5cba8c5105a3350c2c'; // Your client id
 var client_secret = '59c46d64eb8c4b608b0020551a2648c5'; // Your secret
-var redirect_uri = 'http://localhost:5000/callback'; // Your redirect uri
+//var redirect_uri = 'http://localhost:5000/callback'; // Your redirect uri
+var redirect_uri = 'https://spotify-analyzer.herokuapp.com/callback'; // Your redirect uri
 
 /**
  * Generates a random string containing numbers and letters
