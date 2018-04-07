@@ -16,7 +16,8 @@ var path = require('path')
 var client_id = '3558fa27e3de4d5cba8c5105a3350c2c'; // Your client id
 var client_secret = '59c46d64eb8c4b608b0020551a2648c5'; // Your secret
 //var redirect_uri = 'http://localhost:5000/callback'; // Your redirect uri
-var redirect_uri = 'https://spotify-analyzer.herokuapp.com/callback'; // Your redirect uri
+//var redirect_uri = 'https://spotify-analyzer.herokuapp.com/callback'; // Your redirect uri
+var redirect_uri = '/callback';
 
 /**
  * Generates a random string containing numbers and letters
@@ -52,7 +53,7 @@ app.get('/login', function(req, res) {
       response_type: 'code',
       client_id: client_id,
       scope: scope,
-      redirect_uri: redirect_uri,
+      redirect_uri: req.protocol + "://" + req.get('host') + redirect_uri,
       state: state
     }));
 });
@@ -77,7 +78,7 @@ app.get('/callback', function(req, res) {
       url: 'https://accounts.spotify.com/api/token',
       form: {
         code: code,
-        redirect_uri: redirect_uri,
+        redirect_uri: req.protocol + "://" + req.get('host') + redirect_uri,
         grant_type: 'authorization_code'
       },
       headers: {
@@ -144,5 +145,5 @@ app.get('/refresh_token', function(req, res) {
 });
 
 var port = process.env.PORT || 5000;
-console.log('Listening on 8888');
+console.log('Listening on 5000');
 app.listen(port);
