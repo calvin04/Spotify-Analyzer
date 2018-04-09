@@ -1,9 +1,30 @@
 /*******************
  * TABLE OF CONTENTS
+ *
+ * Bootstrap properties
+ * Index
+ * Your Playlists section
 ********************/
 
 * {
-  font-family: Raleway;
+  font-family: 'Open Sans', sans-serif;
+}
+
+body {
+  background-image: url('http://www.designbolts.com/wp-content/uploads/2013/02/Golf-Shirt-Grey-Seamless-Pattern-For-Website-Background.jpg');
+}
+
+.btn, .btn:focus {
+  color: black;
+  background-color: rgb(150, 212, 150);
+  border-color: rgb(76, 175, 80);
+  transition: background-color 0.5s ease;
+}
+
+.btn:hover, .btn:active {
+  color: black;
+  background-color: rgb(100, 173, 100);
+  border-color: rgb(76, 175, 80);
 }
 
 .text-overflow {
@@ -13,7 +34,50 @@
   width: 500px;
 }
 
-/* Your Playlists section */
+#site-title h1 {
+  text-align: center;
+  font-weight: 700;
+}
+
+/***************
+ * Bootstrap
+****************/
+.jumbotron {
+  padding: 10px 30px 20px 30px;
+  background: rgba(51, 204, 51, .4);
+}
+
+.row {
+  margin-left: 0;
+}
+
+/***************
+ * Index
+****************/
+#login, #loggedin {
+  display: none;
+}
+
+#login, #user-profile {
+  text-align: center;
+}
+
+#loggedin {
+  text-align: center;
+  margin: 0 auto;
+  max-width: 550px;
+}
+
+.login-auth {
+  font-size: 16px;
+  padding: 12px 14px 12px 14px;
+  border-radius: 10px;
+  white-space: normal;
+}
+
+/***************
+ * Your Playlists section
+****************/
 .your-playlists-all {
   font-weight: bold;
   width: 100%;
@@ -28,20 +92,11 @@
   margin-bottom: 10px;
 }
 
-.your-playlists-all button {
-  line-height: 24px;
-  text-align: center;
-  vertical-align: middle;
-}
-
 /* Analyze playlist buttons */
 .playlist-button-name {
-  display: inline;
+  word-break: break-word;
   text-align: left;
-}
-
-.playlist-analyze {
-  float: right;
+  padding-right: 5px;
 }
 
 /* Centering Analytics*/

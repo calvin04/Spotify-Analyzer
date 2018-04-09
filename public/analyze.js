@@ -164,6 +164,46 @@ function getAverageYear(album_list, album_year) {
 }
 
 /**
+ * Generates a graph of song counts per year.
+ */
+function generateYearGraph(years, year_count) {
+	Chart.defaults.global.defaultFontFamily = 'Open Sans';
+	Chart.defaults.global.defaultFontColor = 'black';
+	new Chart(document.getElementById("bar-chart"), {
+	    type: 'bar',
+	    data: {
+
+	      labels: years,
+	      datasets: [
+		{
+		  label: "Song count",
+		  backgroundColor: "#3e95cd",
+		  data: year_count
+		}
+	      ]
+	    },
+	    options: {
+	      legend: { display: false },
+	      title: {
+		display: true,
+		text: 'Song Count By Year',
+		fontSize: 24
+	      },
+	      scales : {
+		yAxes: [{
+		  ticks: { callback : function(value) { 
+		    if (!(value % 1)) {
+		    return Number(value).toFixed(0);
+		    }},
+ 		    beginAtZero: true
+		  }
+		}]
+	      }
+	    }
+	});
+}
+
+/**
  * Calls API requests for playlist tracks.
  */
 function getPlaylistStatsAPI(userid, playlistid, offset, playlist_data) {
@@ -237,6 +277,7 @@ function getPlaylistStatsAPI(userid, playlistid, offset, playlist_data) {
                 displayFrequentAlbums(album_list, album_artists);
 		var avg_year = getAverageYear(album_list, album_year);	
 
+		// generate list of years and song count
 		var years = [];
 		var year_count = [];
 		for (var i = parseInt(Object.keys(year_list)[0]); i < 2019; i++) {
@@ -248,37 +289,7 @@ function getPlaylistStatsAPI(userid, playlistid, offset, playlist_data) {
                     }
                 }	
 
-		Chart.defaults.global.defaultFontFamily = 'Raleway';
-		Chart.defaults.global.defaultFontColor = 'black';
-		new Chart(document.getElementById("bar-chart"), {
-		    type: 'bar',
-		    data: {
-		      labels: years,
-		      datasets: [
-			{
-			  label: "Song count",
-			  backgroundColor: "#3e95cd",
-			  data: year_count
-			}
-		      ]
-		    },
-		    options: {
-		      legend: { display: false },
-		      title: {
-			display: true,
-			text: 'Song Count By Year',
-			fontSize: 24
-		      },
-		      scales : {
-			yAxes: [{
-			  ticks: { callback : function(value) { 
-			    if (!(value % 1)) {
-                            return Number(value).toFixed(0);
-                          }}}
-			}]
-		      }
-		    }
-                });
+		generateYearGraph(years, year_count);
 
 	        /* Update the page with the stats */
                 playlistStatsPlaceholder.innerHTML = playlistStatsTemplate({

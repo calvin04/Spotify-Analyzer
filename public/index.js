@@ -45,6 +45,7 @@ function getId(callback) {
 
 /**
  * Gets all playlists of the logged in user
+ *
  * @return Object
  */
 function getAllPlaylists(username, isOwner = false) {
@@ -58,9 +59,9 @@ function getAllPlaylists(username, isOwner = false) {
       url:'https://api.spotify.com/v1/' + username_str + '/playlists',
       headers: {'Authorization': "Bearer " + access_token},
       success: function(data) {
-        /* Loop through playlists and add them */
+        // Loop through playlists and add them
 	for (var key in data.items) {
-	  all += '<div class="playlist-button-name">' + data.items[key].name + '</div><div class="playlist-button-click"><button class="playlist-analyze" onclick="window.location.href=&quot;analyze.html?username=' + data.items[key].owner.id + '&id=' + data.items[key].id + '&token=' + access_token + '&quot;">Analyze Playlist</button></div>';
+	  all += '<div class="playlist-button-name">' + data.items[key].name + '</div><div class="playlist-button-click"><a class="btn" href="analyze.html?username=' + data.items[key].owner.id + '&id=' + data.items[key].id + '&token=' + access_token + '&quot;">Analyze Playlist</a></div>';
 	}
 	playlistListPlaceholder.innerHTML = playlistListTemplate({ all: all });
       }
@@ -105,7 +106,7 @@ if (error) {
 		// load logged in user's playlists if none given
 		getId(function(data) {
 		    if (username) {
-			document.getElementById("your-playlists-title").innerHTML = "<h2>" + username + "'s Playlists</h2>";
+			document.getElementById("your-playlists-title").innerHTML = "<h3>" + username + "'s Playlists</h3>";
 			getAllPlaylists(username);
 		    } else {
 			getAllPlaylists(data.id, true);
