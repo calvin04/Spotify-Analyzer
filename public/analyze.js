@@ -92,11 +92,23 @@ function getPlaylistName(userid, playlistid) {
 
 /**
  * Displays the most frequent artists in the playlist.
+ *
  */
 function displayFrequentArtists(artist_list) {
     var num = 20 // number of artists to display
     var sorted_artists = [];
-    var table_info = "<table id='artist-count'><tr><th>Artist</th><th>Count</th></tr>";
+    var table_info = `<table id='artist-count' class='table-striped table-bordered'>
+                        <colgroup>
+       			  <col span="1" style="width: 85%;">
+       			  <col span="1" style="width: 15%;">
+                        </colgroup>
+                        <thead>
+                          <tr>
+                            <th>Artist</th>
+                            <th>Count</th>
+                          </tr>
+                        </thead>
+                      <tbody>`;
 
     // sorting artists by song count
     for (var artist in artist_list) {
@@ -111,21 +123,36 @@ function displayFrequentArtists(artist_list) {
     e.className = "freq_artist_table";
 
     for (i = 0; i < Math.min(num, sorted_artists.length); i++) {
-        table_info += "<tr><td align='left'>" + sorted_artists[i][0] + "</td><td align='right' width='10%'>" + sorted_artists[i][1] + "</td></tr>";
+        table_info += "<tr><td align='left'>" + sorted_artists[i][0] + "</td><td align='right'>" + sorted_artists[i][1] + "</td></tr>";
     }
 
-    table_info += "</table>";
+    table_info += "</tbody></table>";
     e.innerHTML = table_info;
     document.getElementById("frequent-artists").append(e);
 }
 
 /**
  * Displays the most frequent albums in the playlist.
+ *
  */
 function displayFrequentAlbums(album_list, album_artists) {
     var num = 20 // number of albums to display
     var sorted_albums = [];
-    var table_info = "<table id='album-count'><tr><th>Album</th><th>Artist</th><th>Count</th></tr>";
+    var table_info = `<table id='album-count' class='table-striped table-bordered'>
+                        <colgroup>
+       			  <col span="1" style="width: 55%;">
+                          <col span="1" style="width: 38%;">
+       			  <col span="1" style="width: 7%;">
+                        </colgroup>
+                        <thead>
+                          <tr>
+                            <th>Album</th>
+                            <th>Album</th>
+                            <th>Count</th>
+                          </tr>
+                        </thead>
+                      <tbody>`;
+
 
     // sorting albums by song count
     for (var album in album_list) {
@@ -167,40 +194,38 @@ function getAverageYear(album_list, album_year) {
  * Generates a graph of song counts per year.
  */
 function generateYearGraph(years, year_count) {
-	Chart.defaults.global.defaultFontFamily = 'Open Sans';
-	Chart.defaults.global.defaultFontColor = 'black';
-	new Chart(document.getElementById("bar-chart"), {
-	    type: 'bar',
-	    data: {
-
-	      labels: years,
-	      datasets: [
-		{
-		  label: "Song count",
-		  backgroundColor: "#3e95cd",
-		  data: year_count
+    Chart.defaults.global.defaultFontFamily = 'Open Sans';
+    Chart.defaults.global.defaultFontColor = 'black';
+    new Chart(document.getElementById("bar-chart"), {
+	type: 'bar',
+	data: {
+	    labels: years,
+	    datasets: [{
+		label: "Song count",
+		backgroundColor: "#1ED760",
+		data: year_count
 		}
-	      ]
-	    },
-	    options: {
-	      legend: { display: false },
-	      title: {
+	    ]
+	},
+	options: {
+	    legend: { display: false },
+	    title: {
 		display: true,
 		text: 'Song Count By Year',
 		fontSize: 24
-	      },
-	      scales : {
+	    },
+	    scales : {
 		yAxes: [{
 		  ticks: { callback : function(value) { 
 		    if (!(value % 1)) {
-		    return Number(value).toFixed(0);
+		      return Number(value).toFixed(0);
 		    }},
  		    beginAtZero: true
 		  }
 		}]
-	      }
 	    }
-	});
+	}
+    });
 }
 
 /**
@@ -227,6 +252,7 @@ function getPlaylistStatsAPI(userid, playlistid, offset, playlist_data) {
 	        var totaltracks = data.total;
                 var popularity = 0;
                 var duration = 0;
+		// artist/album : count
                 var artist_list = {};
 		var album_list = {};
 		var album_artists = {};
@@ -235,7 +261,7 @@ function getPlaylistStatsAPI(userid, playlistid, offset, playlist_data) {
                 var alltracks = "";
 
                 for (var track in playlist_data) {
-                    // append the artist names for each track
+                    // append the artist names and count for each track
                     for (var artist in playlist_data[track].track.artists) {
                         key = playlist_data[track].track.artists[artist].name;
                         artist_list[key] = (artist_list[key] || 0) + 1;
@@ -291,9 +317,10 @@ function getPlaylistStatsAPI(userid, playlistid, offset, playlist_data) {
 
 		generateYearGraph(years, year_count);
 
-	        /* Update the page with the stats */
+	        // Update the page with the stats
                 playlistStatsPlaceholder.innerHTML = playlistStatsTemplate({
                     popularity_avg: popularity,
+                    unique_artists: Object.keys(artist_list).length,
 	            total_duration: total_duration,
 	            avg_duration: duration,
 	            total: totaltracks,

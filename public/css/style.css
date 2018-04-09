@@ -14,18 +14,38 @@ body {
   background-image: url('http://www.designbolts.com/wp-content/uploads/2013/02/Golf-Shirt-Grey-Seamless-Pattern-For-Website-Background.jpg');
 }
 
-.btn, .btn:focus {
+.btn, .btn:focus, .btn:visited {
   color: black;
   background-color: rgb(150, 212, 150);
   border-color: rgb(76, 175, 80);
   transition: background-color 0.5s ease;
 }
 
-.btn:hover, .btn:active {
+.btn:hover, .btn:active, .btn:focus-within {
   color: black;
   background-color: rgb(100, 173, 100);
   border-color: rgb(76, 175, 80);
 }
+
+/* Tables */
+td, th {
+  padding: 3px 8px 3px 8px;
+}
+
+.table-striped>tbody>tr:nth-child(odd)>td {
+  background-color: rgba(51, 204, 51, .5);
+}
+.table-striped>tbody>tr:nth-child(even)>td, .table-striped>thead>tr:nth-child(odd)>th {
+  background-color: rgba(180, 196, 184, .5);
+}
+
+.table-striped>tbody>tr:nth-child(odd):hover {
+  background-color: rgba(51, 204, 51, .2);
+}
+.table-striped>tbody>tr:nth-child(even):hover, .table-striped>thead>tr:nth-child(odd):hover {
+  background-color: rgba(180, 196, 184, .8);
+}
+
 
 .text-overflow {
   overflow: hidden;
@@ -85,18 +105,26 @@ body {
   line-height: 32px;
   display: grid;
   grid-template-columns: [first] 3fr [second] 1fr [third];
-  margin-bottom: 10px;
+  margin-bottom: 30px;
 }
 
 .your-playlists-all div {
   margin-bottom: 10px;
 }
 
-/* Analyze playlist buttons */
 .playlist-button-name {
   word-break: break-word;
   text-align: left;
   padding-right: 5px;
+}
+
+/***************
+ * Search for a user
+****************/
+.form-element {
+  display: inline;
+  width: 50%;
+  margin: 5px 0 10px 0;
 }
 
 /* Centering Analytics*/
@@ -105,17 +133,21 @@ body {
 }
 
 /* Analyze playlist header */
-#playlist-name {
-  border-bottom: 1px solid black;
+#playlist-name h1 {
+  font-size: 42px !important;
+  font-weight: 700;
 }
 
-/* Frequent Artists section */
+/***************
+ * Frequent Artists section
+****************/
 #frequent-artists {
   padding-bottom: 20px;
 }
 
 #artist-count {
-  width: 250px;
+  width: 100%;
+  max-width: 300px;
   margin: 0px auto;
 }
 
@@ -124,7 +156,8 @@ body {
 }
 
 #album-count {
-  width: 600px;
+  width: 100%;
+  max-width: 600px;
   margin: 0px auto;
 }
 

@@ -9,9 +9,11 @@
     <link rel="stylesheet" href="css/style.css">
   </head>
     <body>
-      <div class="container">
+      <div class="jumbotron">
         <div id="playlist-name">
         </div>
+      </div>
+      <div class="container">
         <div id="playlist-stats">
         </div>
         <div id="frequent-artists">
@@ -23,16 +25,17 @@
         <div id="bar-div">
 	    <canvas id="bar-chart"></canvas>
         </div>
-        <button onclick="window.history.back()">Back</button>
+        <a class="btn" onclick="window.history.back()">Back</a>
       </div>
 
     <script id="analyze-title" type="text/x-handlebars-template">
-      <h1>Analyzing Playlist {{playlistname}}</h1>
+      <h1>Playlist Stats For {{playlistname}}</h1>
     </script>
 
     <script id="analyze-stats" type="text/x-handlebars-template">
       <h2>General Stats</h2>
       <p><b>Total tracks:</b> {{total}} <br>
+      <b>Unique Artists:</b> {{unique_artists}} <br>
       <b>Total playlist duration:</b> {{total_duration}} <br>
       <b>Average track duration:</b> {{avg_duration}} <br>
       <b>Average popularity of tracks:</b> {{popularity_avg}} <br>
