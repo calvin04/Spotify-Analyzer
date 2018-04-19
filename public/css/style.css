@@ -32,6 +32,11 @@ td, th {
   padding: 3px 8px 3px 8px;
 }
 
+.table-striped {
+  width: 100%;
+  margin: 0 auto;
+}
+
 .table-striped>tbody>tr:nth-child(odd)>td {
   background-color: rgba(51, 204, 51, .5);
 }
@@ -57,6 +62,10 @@ td, th {
 #site-title h1 {
   text-align: center;
   font-weight: 700;
+}
+
+.stats-header {
+  text-align: center;
 }
 
 /***************
@@ -127,11 +136,6 @@ td, th {
   margin: 5px 0 10px 0;
 }
 
-/* Centering Analytics*/
-#playlist-name, #playlist-stats, #frequent-artists, #frequent-albums, #bar-div {
-  text-align: center;
-}
-
 /* Analyze playlist header */
 #playlist-name h1 {
   font-size: 42px !important;
@@ -146,9 +150,7 @@ td, th {
 }
 
 #artist-count {
-  width: 100%;
   max-width: 300px;
-  margin: 0px auto;
 }
 
 .container {
@@ -156,9 +158,11 @@ td, th {
 }
 
 #album-count {
-  width: 100%;
   max-width: 600px;
-  margin: 0px auto;
+}
+
+.pop-count {
+  max-width: 500px;
 }
 
 /* Bar Chart Canvas */

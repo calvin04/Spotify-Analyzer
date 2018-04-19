@@ -10,19 +10,21 @@
   </head>
     <body>
       <div class="jumbotron">
-        <div id="playlist-name">
+        <div id="playlist-name" class="stats-header">
         </div>
       </div>
       <div class="container">
-        <div id="playlist-stats">
+        <div id="playlist-stats" class="stats-header">
         </div>
-        <div id="frequent-artists">
-            <h2>Frequent Artists</h2>
+        <div id="frequent-artists" class="stats-header">
         </div>
-        <div id="frequent-albums">
-            <h2>Frequent Albums</h2>
+        <div id="frequent-albums" class="stats-header">
         </div>
-        <div id="bar-div">
+        <div id="popularity-high" class="stats-header">
+        </div>
+        <div id="popularity-low" class="stats-header">
+        </div>
+        <div id="bar-div" class="stats-header">
 	    <canvas id="bar-chart"></canvas>
         </div>
         <a class="btn" onclick="window.history.back()">Back</a>
@@ -36,6 +38,7 @@
       <h2>General Stats</h2>
       <p><b>Total tracks:</b> {{total}} <br>
       <b>Unique Artists:</b> {{unique_artists}} <br>
+      <b>Unique Albums:</b> {{unique_albums}} <br>
       <b>Total playlist duration:</b> {{total_duration}} <br>
       <b>Average track duration:</b> {{avg_duration}} <br>
       <b>Average popularity of tracks:</b> {{popularity_avg}} <br>
