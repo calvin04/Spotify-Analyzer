@@ -14,7 +14,11 @@
         </div>
       </div>
       <div class="container">
-        <div id="playlist-stats" class="stats-header">
+	<div id="row1">
+            <div id="playlist-stats" class="stats-header">
+            </div>
+            <div id="top-artist-box" class="stats-header">
+            </div>
         </div>
         <div id="frequent-artists" class="stats-header">
         </div>
@@ -32,6 +36,12 @@
 
     <script id="analyze-title" type="text/x-handlebars-template">
       <h1>Playlist Stats For {{playlistname}}</h1>
+    </script>
+
+    <script id="top-artist" type="text/x-handlebars-template">
+      <h2>Top Artist</h2>
+      <div id="top-artist-img"></div>
+      <h4>{{artist_name}}</h4>
     </script>
 
     <script id="analyze-stats" type="text/x-handlebars-template">

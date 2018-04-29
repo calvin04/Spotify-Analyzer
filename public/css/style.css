@@ -59,8 +59,11 @@ td, th {
   width: 500px;
 }
 
-#site-title h1 {
+#site-title {
   text-align: center;
+}
+
+#site-title h1 {
   font-weight: 700;
 }
 
@@ -83,6 +86,21 @@ td, th {
 /***************
  * Index
 ****************/
+#spotify-logo {
+  vertical-align: top;
+  background-image: url("../media/logo.png");
+  width: 100px;
+  height: 100px;
+  background-size: contain;
+  display: inline-block;
+  margin: 0 25px 0 25px;
+}
+
+#site-title1 {
+  display: inline-block;
+  vertical-align: middle;
+}
+
 #login, #loggedin {
   display: none;
 }
@@ -143,6 +161,28 @@ td, th {
 }
 
 /***************
+ * Artist Image
+****************/
+#row1 {
+  margin: 0 auto;
+  text-align: center;
+}
+
+#top-artist-box, #playlist-stats {
+  display: inline-block;
+  margin: 0 40px 0 40px;
+}
+
+#top-artist-img {
+  width: 110px;
+  height: 110px;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center center;
+  margin: 0 auto;
+}
+
+/***************
  * Frequent Artists section
 ****************/
 #frequent-artists {
@@ -170,4 +210,16 @@ td, th {
   width: 100%;
 }
 #bar-chart {
+}
+
+/***************
+ * MOBILE
+****************/
+@media screen and (max-width: 768px) {
+
+#spotify-logo {
+  width: 75px;
+  height: 75px;
+}
+
 }

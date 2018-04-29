@@ -1,20 +1,6 @@
 window.onload = (function() {
 
 /**
- * Obtains parameters from the hash of the URL
- * @return Object
- */
-function getHashParams() {
-    var hashParams = {};
-    var e, r = /([^&;=]+)=?([^&;]*)/g,
-        q = window.location.hash.substring(1);
-    while ( e = r.exec(q)) {
-       hashParams[e[1]] = decodeURIComponent(e[2]);
-    }
-    return hashParams;
-}
-
-/**
  * Return parameters in a URL
  * @return Object
  */
@@ -91,10 +77,28 @@ function getPlaylistName(userid, playlistid) {
 }
 
 /**
+ * Gets first image of artist, if any.
+ */
+function getArtistImage(artistid) {
+    $.ajax({
+      type: 'GET',
+      url:'https://api.spotify.com/v1/artists/' + artistid,
+      headers: {'Authorization': "Bearer " + access_token},
+      success: function(data) {
+	if (data.images.length > 0) {
+            var artistImgTemplate = Handlebars.compile(document.getElementById('top-artist').innerHTML);
+            document.getElementById('top-artist-box').innerHTML = artistImgTemplate({ artist_name: data.name });
+            document.getElementById("top-artist-img").style.backgroundImage = "url('" + data.images[0]["url"] + "')";
+        }
+       }
+    });
+}
+
+/**
  * Displays the most frequent artists in the playlist.
  *
  */
-function displayFrequentArtists(artist_list) {
+function displayFrequentArtists(artist_list, artist_to_id) {
     var num = 20 // number of artists to display
     var sorted_artists = [];
     var table_info = `<table id='artist-count' class='table-striped table-bordered'>
@@ -117,6 +121,7 @@ function displayFrequentArtists(artist_list) {
     sorted_artists.sort(function(a, b) {
         return b[1] - a[1];
     });
+    getArtistImage(artist_to_id[sorted_artists[0][0]]);
 
     // generate table
     var e = document.createElement('div');
@@ -302,6 +307,12 @@ function getPlaylistStatsAPI(userid, playlistid, offset, playlist_data) {
                 getPlaylistStatsAPI(userid, playlistid, offset, playlist_data);
             // analyse playlist
             } else {
+		// check for empty playlist
+		if (data.total == 0) {
+		    document.getElementById("frequent-artists").append("No songs to analyze in playlist.");
+                    return;
+                }
+
 	        var key, year, song_name, song_popularity;
 	        var totaltracks = data.total;
                 var popularity = 0;
@@ -313,6 +324,7 @@ function getPlaylistStatsAPI(userid, playlistid, offset, playlist_data) {
 	        var album_year = {};
                 var year_list = {};
                 var song_artist = {};
+		var artist_to_id = {}
                 //
                 var popularity_list = {}
 
@@ -324,6 +336,7 @@ function getPlaylistStatsAPI(userid, playlistid, offset, playlist_data) {
                     for (var artist in playlist_data[track].track.artists) {
                         key = playlist_data[track].track.artists[artist].name;
                         artist_list[key] = (artist_list[key] || 0) + 1;
+			artist_to_id[key] = playlist_data[track].track.artists[artist].id;
                     }
 
                     // append the album for each track
@@ -367,7 +380,7 @@ function getPlaylistStatsAPI(userid, playlistid, offset, playlist_data) {
 	        duration = msToTimeAvg((duration / totaltracks).toFixed(0));
 
                 // Display artist, album table, popularity list
-		displayFrequentArtists(artist_list);
+		displayFrequentArtists(artist_list, artist_to_id);
                 displayFrequentAlbums(album_list, album_artists);
                 displayPopularity(popularity_list, song_artist);
 		var avg_year = getAverageYear(album_list, album_year);	
@@ -409,6 +422,7 @@ function getPlaylistStats(userid, playlistid, offset) {
     getPlaylistStatsAPI(userid, playlistid, offset, playlist_data);
 }
 
+
 /************
  * MAIN
  ************/
@@ -429,5 +443,4 @@ var playlistStats = document.getElementById('analyze-stats').innerHTML,
     playlistStatsTemplate = Handlebars.compile(playlistStats),
     playlistStatsPlaceholder = document.getElementById('playlist-stats');
 
-(function(){console.log(document.getElementById('playlist-name'));}())
 }());
