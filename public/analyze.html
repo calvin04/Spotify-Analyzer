@@ -14,10 +14,19 @@
         </div>
       </div>
       <div class="container">
+	<div id="general-stats">
+            Loading stats...
+        </div>
 	<div id="row1">
             <div id="playlist-stats" class="stats-header">
             </div>
             <div id="top-artist-box" class="stats-header">
+            </div>
+        </div>
+	<div id="row2">
+            <div id="top-album-box" class="stats-header">
+            </div>
+            <div id="playlist-stats2" class="stats-header">
             </div>
         </div>
         <div id="frequent-artists" class="stats-header">
@@ -39,20 +48,28 @@
     </script>
 
     <script id="top-artist" type="text/x-handlebars-template">
-      <h2>Top Artist</h2>
+      <h3>Top Artist</h3>
       <div id="top-artist-img"></div>
       <h4>{{artist_name}}</h4>
     </script>
 
+    <script id="top-album" type="text/x-handlebars-template">
+      <h3>Top Album</h3>
+      <div id="top-album-img"></div>
+      <h4>{{album_name}}</h4>
+    </script>
+
     <script id="analyze-stats" type="text/x-handlebars-template">
-      <h2>General Stats</h2>
-      <p><b>Total tracks:</b> {{total}} <br>
-      <b>Unique Artists:</b> {{unique_artists}} <br>
-      <b>Unique Albums:</b> {{unique_albums}} <br>
-      <b>Total playlist duration:</b> {{total_duration}} <br>
-      <b>Average track duration:</b> {{avg_duration}} <br>
-      <b>Average popularity of tracks:</b> {{popularity_avg}} <br>
-      <b>Average year of tracks:</b> {{avg_year}}</p>
+      <p>Total tracks: {{total}} <br>
+      Unique Artists: {{unique_artists}} <br>
+      Unique Albums: {{unique_albums}} <br>
+      Playlist duration: {{total_duration}} <br></p>
+    </script>
+
+    <script id="analyze-stats2" type="text/x-handlebars-template">
+      <p>Average track duration: {{avg_duration}} <br>
+      Average track popularity: {{popularity_avg}} <br>
+      Average track year: {{avg_year}}</p>
     </script>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/2.0.0-alpha.1/handlebars.min.js"></script>

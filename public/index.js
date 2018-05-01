@@ -103,6 +103,15 @@ if (error) {
                 userProfilePlaceholder.innerHTML = userProfileTemplate(response);
                 $('#login').hide();
                 $('#loggedin').show();
+
+		// allow user to click their own name
+		document.querySelector('#logged-as').addEventListener('click', function(e){
+			e.preventDefault();
+		 	var currentURL = new URL(window.location.href);
+			currentURL.searchParams.set("username", response.id);
+			window.location = currentURL;
+		});
+
 		// load logged in user's playlists if none given
 		getId(function(data) {
 		    if (username) {

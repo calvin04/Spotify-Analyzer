@@ -122,6 +122,10 @@ td, th {
   white-space: normal;
 }
 
+#logged-as {
+  cursor: pointer;
+}
+
 /***************
  * Your Playlists section
 ****************/
@@ -160,22 +164,38 @@ td, th {
   font-weight: 700;
 }
 
-/***************
- * Artist Image
-****************/
-#row1 {
+#general-stats {
   margin: 0 auto;
+  margin-bottom: 25px;
   text-align: center;
 }
 
-#top-artist-box, #playlist-stats {
-  display: inline-block;
-  margin: 0 40px 0 40px;
+/***************
+ * Artist and Album Image
+****************/
+#row1, #row2 {
+  margin: 10px auto 10px auto;
+  text-align: center;
 }
 
-#top-artist-img {
-  width: 110px;
-  height: 110px;
+#row1 {
+  font-size: 24px;
+  line-height: 52px;
+}
+#row2 {
+  font-size: 24px;
+  line-height: 69px;
+}
+
+#top-artist-box, #playlist-stats, #top-album-box, #playlist-stats2 {
+  display: inline-block;
+  margin: 0 40px 0 40px;
+  vertical-align: center;
+}
+
+#top-artist-img, #top-album-img {
+  width: 120px;
+  height: 120px;
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center center;
@@ -186,6 +206,7 @@ td, th {
  * Frequent Artists section
 ****************/
 #frequent-artists {
+  margin-top: 30px;
   padding-bottom: 20px;
 }
 
@@ -205,10 +226,14 @@ td, th {
   max-width: 500px;
 }
 
-/* Bar Chart Canvas */
+/***************
+ * Bar Chart Canvas
+****************/
 #bar-div {
   width: 100%;
+  margin-top: 15px;
 }
+
 #bar-chart {
 }
 
