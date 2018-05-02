@@ -247,4 +247,23 @@ td, th {
   height: 75px;
 }
 
+/***************
+ * Artist and Album Image
+****************/
+
+#row1, #row2 {
+  font-size: 20px;
+  line-height: 40px;
+}
+
+#top-artist-box, #playlist-stats, #top-album-box, #playlist-stats2 {
+  display: block;
+  margin: 40px 10px 40px 10px;
+}
+
+#top-artist-img, #top-album-img {
+  width: 175px;
+  height: 175px;
+}
+
 }
