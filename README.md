@@ -1,15 +1,6 @@
 # Spotify Playlist Analyzer (Credits to Spotify Authentication Flow Tutorial)
 
-## Installation
-
-Once installed, clone the repository and install its dependencies running:
-
-$ npm install
-
-$ cd spotify_analyzer
-$ node app.js
-
-Then enter http://localhost:8888/ in your browser.
+Website link: https://spotify-analyzer.herokuapp.com
 
 ## About
 
