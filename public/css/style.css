@@ -11,7 +11,7 @@
 }
 
 body {
-  background-image: url('https://www.designbolts.com/wp-content/uploads/2013/02/Golf-Shirt-Grey-Seamless-Pattern-For-Website-Background.jpg');
+  background-image: url('../media/background.jpg');
 }
 
 .btn, .btn:focus, .btn:visited {
