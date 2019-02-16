@@ -60,10 +60,10 @@ function getAllPlaylists(username, isOwner = false) {
       headers: {'Authorization': "Bearer " + access_token},
       success: function(data) {
         // Loop through playlists and add them
-	for (var key in data.items) {
-	  all += '<div class="playlist-button-name">' + data.items[key].name + '</div><div class="playlist-button-click"><a class="btn" href="analyze.html?username=' + data.items[key].owner.id + '&id=' + data.items[key].id + '&token=' + access_token + '&quot;">Analyze Playlist</a></div>';
-	}
-	playlistListPlaceholder.innerHTML = playlistListTemplate({ all: all });
+	    for (var key in data.items) {
+		  all += '<div class="playlist-button-name">' + data.items[key].name + '</div><div class="playlist-button-click"><a class="btn" href="analyze.html?username=' + data.items[key].owner.id + '&id=' + data.items[key].id + '&token=' + access_token + '&quot;">Analyze Playlist</a></div>';
+	    }
+	    playlistListPlaceholder.innerHTML = playlistListTemplate({ all: all });
       }
     });
     return all;
@@ -111,14 +111,24 @@ if (error) {
 			currentURL.searchParams.set("username", response.id);
 			window.location = currentURL;
 		});
-
+		
 		// load logged in user's playlists if none given
 		getId(function(data) {
-		    if (username) {
-			document.getElementById("your-playlists-title").innerHTML = "<h3>" + username + "'s Playlists</h3>";
-			getAllPlaylists(username);
+		    if (!username) {
+			    getAllPlaylists(data.id, true);
 		    } else {
-			getAllPlaylists(data.id, true);
+				document.getElementById("your-playlists-title").innerHTML = "<h3>" + username + "'s Playlists</h3>";
+				
+				// get display name for user
+				$.ajax({
+				  type: 'GET',
+				  url: 'https://api.spotify.com/v1/users/' + username,
+				  headers: {'Authorization': 'Bearer ' + access_token},
+				  success: function(data) {
+					document.getElementById("your-playlists-title").innerHTML = "<h3>" + data.display_name + "'s Playlists</h3>";
+			        getAllPlaylists(username);
+				  }
+				});
 		    }
 		});
             }

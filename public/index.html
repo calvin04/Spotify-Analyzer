@@ -32,7 +32,7 @@
         </div>
         <div id="search-user">
 	    <form id="search-user-form">
-		<div class="form_title"><h4>...Or search for a user's playlists</h4></div>
+		<div class="form_title"><h4>...Or search for a user's playlists (by id)</h4></div>
                     <div>
 		        <input type="text" id="playlist_text" class="form-element form-control" placeholder="Enter username" name="user_name" required/>
                     </div>
@@ -47,7 +47,7 @@
     </div>
 
     <script id="user-profile-template" type="text/x-handlebars-template">
-      <div id="logged-as"><h2>Logged in as {{id}}</h2></div>
+      <div id="logged-as"><h2>Logged in as {{display_name}}</h2></div>
       <!--<div class="media">
         <div class="pull-left">
           <img class="media-object" width="150" src="{{images.0.url}}" />
