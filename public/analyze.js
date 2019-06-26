@@ -426,7 +426,7 @@ function getPlaylistStatsAPI(userid, playlistid, offset, playlist_data) {
 		// generate list of years and song count
 		var years = [];
 		var year_count = [];
-		for (var i = parseInt(Object.keys(year_list)[0]); i < 2019; i++) {
+		for (var i = parseInt(Object.keys(year_list)[0]); i < 2021; i++) {
                     years.push(String(i));
 		    if (year_list[String(i)]) {
 		        year_count.push(year_list[String(i)]);
