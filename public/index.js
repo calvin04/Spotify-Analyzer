@@ -68,9 +68,34 @@ function getAllPlaylists(username, isOwner = false) {
     });
     return all;
   }
-
+  
+/**
+ * Gets playlist given the id
+ * Used to load playlist stats page.
+ *
+ * @return Object
+ */
+function getPlaylist(playlist) {
+    var all = "";
+    $.ajax({
+      type: 'GET',
+      url:'https://api.spotify.com/v1/playlists/' + playlist,
+      headers: {'Authorization': "Bearer " + access_token},
+      success: function(data) {
+		var currentURL = decodeURIComponent('analyze.html%3Fid=' + playlist + '&token=' + access_token);
+		location.href = currentURL;
+      },
+	  error: function() {
+		alert("Playlist could not be found");
+	  }
+    });
+    return all;
+  }  
+  
 /**********
+ *
  * MAIN
+ *
  **********/
 var userProfileSource = document.getElementById('user-profile-template').innerHTML,
     userProfileTemplate = Handlebars.compile(userProfileSource),
@@ -152,6 +177,17 @@ document.querySelector('#search-user-form').addEventListener('submit', function(
  	var currentURL = new URL(window.location.href);
 	currentURL.searchParams.set("username", user);
 	window.location = currentURL;
+});
+
+document.querySelector('#get-playlist-form').addEventListener('submit', function(e){
+        // prevent from refreshing the page on submit
+        e.preventDefault();
+        // read form element
+        var playlist = document.getElementById("playlist_text_2").value;
+        // clean form
+        document.getElementById("get-playlist-form").reset();
+        // gets playlist and takes it to stats (if playlist id exists)
+		getPlaylist(playlist);
 });
 
 }());

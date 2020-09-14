@@ -1,9 +1,15 @@
 /*******************
  * TABLE OF CONTENTS
  *
+ * Tables
  * Bootstrap properties
  * Index
  * Your Playlists section
+ * Search for a user
+ * Artist and album image
+ * Frequent artists section
+ * Mobile
+ *
 ********************/
 
 * {
@@ -27,7 +33,9 @@ body {
   border-color: rgb(76, 175, 80);
 }
 
-/* Tables */
+/***************
+ * Tables
+****************/
 td, th {
   padding: 3px 8px 3px 8px;
 }
@@ -155,7 +163,7 @@ td, th {
 .form-element {
   display: inline;
   width: 50%;
-  margin: 5px 0 10px 0;
+  margin: 5px 10px 10px 0;
 }
 
 /* Analyze playlist header */
@@ -236,6 +244,7 @@ td, th {
 
 #bar-chart {
 }
+
 
 /***************
  * MOBILE
