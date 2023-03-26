@@ -1,6 +1,6 @@
 # Spotify Playlist Analyzer (Credits to Spotify Authentication Flow Tutorial)
 
-Website link: https://spotify-analyzer.herokuapp.com
+Website link: https://spotify-analyzer.onrender.com
 
 ## About
 
